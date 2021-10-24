@@ -16,9 +16,9 @@ TODO: Completar el diseño de la app
 
 ## Colaboradores
 Los autores de esta aplicación son:
-- Rubén Cid Costa
+- Rubén Cid Costa.
 - Pedro Muñoz
-- Rodrigo 
+- Rodrigo Duran Andrés.
 - Luis
 
 TODO: Poner apellidos de todos los miembros y link de Github.
