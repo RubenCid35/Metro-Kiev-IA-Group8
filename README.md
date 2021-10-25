@@ -3,6 +3,7 @@ Se desea moverse por la red de metro de Kiev, pero no conoces las paradas que de
 
 Con esta app, será posible realizar la ruta más optima entre una estación a otra con un viaje de mínima duración.
 
+
 ## Uso / Acceso a la aplicación.
 
 TODO: Completar.
@@ -16,9 +17,7 @@ TODO: Completar el diseño de la app
 
 ## Colaboradores
 Los autores de esta aplicación son:
-- Rubén Cid Costa.
-- Pedro Muñoz
-- Rodrigo Duran Andrés.
-- Luis
-
-TODO: Poner apellidos de todos los miembros y link de Github.
+- Rubén Cid.
+- Pedro Ortiz.
+- Rodrigo Duran.
+- Luis Nuñez.
