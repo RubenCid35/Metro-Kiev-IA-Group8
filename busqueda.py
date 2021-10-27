@@ -2,7 +2,7 @@
 
 # TODO: Importar las librerias necesarias para el trabajo.
 
-# NOTA: Se pueden crear más funciones auxiliares privadas para reducur redundancia en el código.
+# NOTA: Se pueden crear más funciones auxiliares privadas para reducir redundancia en el código.
 
 def busqueda_camino(grafo, inicio, destino, **kwargs):
     # TODO Implementar el algoritmo de A* para que devuelva el camino más corto
