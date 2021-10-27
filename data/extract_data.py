@@ -1,16 +1,30 @@
 import sqlite3
-import csv
 
 # This file is used to generate and transfer all the data
-with sqlite3.connect("estaciones.db") as conn, open("estaciones.csv") as f:
+with sqlite3.connect("estaciones.db") as conn:
     
-    # Para leer los datos del csv
-    csvtool = csv.reader(f, delimiter=";")
+    reader = conn.cursor()
+    writer = conn.cursor()
 
-    # Permite ejecutar queries 
-    cursor = conn.cursor()
+    select_query = """SELECT id_station, linea FROM estaciones 
+    """
 
-    query = """SELECT nombre FROM estaciones WHERE linea=?"""
+    insert_query = """
+            INSERT INTO conexiones(conn_id, origen,destino, linea, peso) VALUES (?, ?, ?, ?, ?)
+    """
+    estaciones: list[(int, int)] = [ data for data in reader.execute(select_query, "")]
+    linea = 1
+    for i in range(len(estaciones)):
+        if estaciones[i][1] != linea:
+            linea += 1
+            continue
 
-    for data in cursor.execute(query, "3"):
-        print(data)
+        if estaciones[i][0] % 100 != 28:
+            conn_id = estaciones[i][0] * 1000 + estaciones[i+1][0]
+            writer.execute(insert_query, (conn_id, estaciones[i][0], estaciones[i+1][0], estaciones[i][1], 0.0))
+            print(f"[RIGTH CONN]{estaciones[i]}{estaciones[i+1]}")
+             
+        if estaciones[i][0] % 100 != 11:
+            conn_id = estaciones[i][0] * 1000 + estaciones[i-1][0]
+            writer.execute(insert_query, (conn_id, estaciones[i][0], estaciones[i-1][0], estaciones[i][1], 0.0))            
+            print(f"[LEFT CONN]{estaciones[i]}{estaciones[i-1]}")
