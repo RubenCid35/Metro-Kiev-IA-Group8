@@ -1,0 +1,19 @@
+
+.mainframe{
+    width: 50%;
+    height: 50%;
+    display: flex;
+    position: relative;
+}
+
+.graph{
+    width: 45%;
+    height: 45%;
+    padding: 2.5% 2.5% 2.5% 2.5%;
+    background-color: black;
+}
+
+.entrypoints, .submit_btn{
+    border-radius: 5px;
+    
+}

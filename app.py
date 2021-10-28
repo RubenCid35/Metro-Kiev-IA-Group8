@@ -2,64 +2,81 @@
 # Imports
 
 # Dash Related Imports
+from types import GetSetDescriptorType
 import dash 
 import dash.html as html
+import dash_core_components as dcc
 import dash_cytoscape as cyto
 import dash_bootstrap_components as dbc # Libreria usada por los StyleSheet predefinidos
+import dash_cytoscape as cyto
 from dash.dependencies import Input, State, Output
 
 # Algoritmo
 
 # Data Loading
+import sqlite3
+from queries import GET_GRAPH_NODES
 
-
+from random import randint
 # ------- App Creation && Global Configuration ------------
 
-app = dash.Dash("metro-kiev-grupo-1")
+app = dash.Dash("metro-kiev-grupo-1", external_stylesheets=[dbc.themes.GRID, dbc.themes.LUMEN])
+
+# ------- Data Loading
+
+database_conn = sqlite3.connect("./data/estaciones.db")
+cursor1 = database_conn.cursor() 
+
+stations = [{'data': {'id': str(_id), 'name': station_name, 'linea': linea}, 'position': {'x': randint(1, 500), 'y': randint(1, 500)}, 'locked': True, 'grabbable': False}
+for _id, station_name, linea, x, y in cursor1.execute(GET_GRAPH_NODES)]
+
+station_listed = [{'label': f"{_id}-{station_name}", "value": _id} for _id, station_name, _, _, _ in cursor1.execute(GET_GRAPH_NODES)]
 
 
 # ------- App Layout (HTML DESCRIPTION) -------------
 
 app.layout = html.Div()
+app.layout = html.Div([
+    html.Div([
+        cyto.Cytoscape(
+            id="grefo-red-metro",
+            autolock= True,
+            layout={'name': 'preset'},
+            elements=stations,
+            className="graph",
+            stylesheet=[
+                {
+                    'selector': '[linea = 1]',
+                    'style': {
+                        'background-color': 'red'
+                    }
+                },
+                
+                {
+                    'selector': '[linea = 2]',
+                    'style': {
+                        'background-color': 'blue',
+                    }
+                },
+                {
+                    'selector': '[linea = 3]',
+                    'style': {
+                        'background-color': 'green'
+                    }
+                }
+            ]
+        )
+    ], className="mainframe"),
+    html.Div([
+        html.Div([
+            html.H3("HALLA EL CAMINO"),
 
-# TODO Crear el Layout
+        ]),
+        html.Div(id="path-container")
+    ], className="mainframe")    
+])
 
 # ------- App Callbacks (FOR MAKING THE APP INTERACTIVE) ------------
-
-@app.callbackk()
-def resaltar_origen(origen) -> str:
-    """
-    Debe resaltar el nodo origen en el grafo con un color para diferenciarlo
-    """
-    # TODO Implementar
-    pass
-
-
-@app.callback()
-def crear_path_input(origin, destino1, grafo) -> html.Div(), str:
-    """
-    Toma el nodo de inicio del input y el nodo selecionado en el input o  el grafo:
-    :param: origin. Nodo Origen. Obtenido del Input Origen de los nodos
-    :param: destino1. Nodo Destino. Obtenido del Input Destino de los nodos.
-    :param: **kwargs. Quitar si no se usa, solo era para que sepais que podeis añadir más datos
-    """
-    # TODO Implement
-    # Nota: Debe de selecionar el nodo destino en le grafo
-    pass
-
-
-@app.callback()
-def crear_path_grafo(origin, destino1) -> html.Div(), str:
-    """
-    Toma el nodo de inicio del input y el nodo selecionado en el input o  el grafo:
-    :param: origin. Nodo Origen. Obtenido del Input Origen de los nodos
-    :param: destino1. Nodo Destino. Es el nodo selecionado en el Grafo.
-    :param: input_destino. Referencia al elemento del input Destino para cambiarlo
-    """
-    # TODO Implement
-    # Nota: Debe de cambiar el nodo seleccionado en el Input de Destino.
-    pass
-
 
 
 if '__main__' == __name__:

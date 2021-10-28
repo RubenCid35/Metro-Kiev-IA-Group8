@@ -3,11 +3,11 @@
 ### PERSONA: RUBÉN CID
 
 - [x] Crear base de datos para el uso general de la aplicación.
-- [ ] Crear la app visual con Dash
 
 ### PERSONA: RODRIGO DURAN
 
 - [ ] Pendiente de Asignación
+- [ ] Crear la app visual con Dash
 
 ### PERSONA: PEDRO ORTIZ
 
