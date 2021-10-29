@@ -8,7 +8,7 @@ GET_GRAPH_NODES: str = """
 
 
 GET_GRAPH_EDGES: str = """
-    SELECT destino, peso FROM conexiones WHERE origen=?
+    SELECT origen, destino, linea FROM conexiones;
 """
 
 

@@ -15,7 +15,7 @@ from dash.dependencies import Input, State, Output
 
 # Data Loading
 import sqlite3
-from queries import GET_GRAPH_NODES
+from queries import GET_GRAPH_NODES, GET_GRAPH_EDGES
 
 from random import randint
 # ------- App Creation && Global Configuration ------------
@@ -30,6 +30,16 @@ cursor1 = database_conn.cursor()
 stations = [{'data': {'id': str(_id), 'name': station_name, 'linea': linea}, 'position': {'x': randint(1, 500), 'y': randint(1, 500)}, 'locked': True, 'grabbable': False}
 for _id, station_name, linea, x, y in cursor1.execute(GET_GRAPH_NODES)]
 
+def get_class(linea):
+    if linea == 1:
+        return 'red'
+    elif linea == 2:
+        return 'blue'
+    elif linea == 3:
+        return 'green'
+
+conexiones = [{'data': {'source': str(origen), 'target': str(destino)}, 'classes': get_class(linea)} for origen, destino, linea in cursor1.execute(GET_GRAPH_EDGES)]
+
 station_listed = [{'label': f"{_id}-{station_name}", "value": _id} for _id, station_name, _, _, _ in cursor1.execute(GET_GRAPH_NODES)]
 
 
@@ -42,7 +52,7 @@ app.layout = html.Div([
             id="grefo-red-metro",
             autolock= True,
             layout={'name': 'preset'},
-            elements=stations,
+            elements=stations + conexiones,
             className="graph",
             stylesheet=[
                 {
