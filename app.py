@@ -8,7 +8,6 @@ import dash.html as html
 import dash_core_components as dcc
 import dash_cytoscape as cyto
 import dash_bootstrap_components as dbc # Libreria usada por los StyleSheet predefinidos
-import dash_cytoscape as cyto
 from dash.dependencies import Input, State, Output
 
 # Algoritmo
@@ -38,14 +37,13 @@ def get_class(linea):
     elif linea == 3:
         return 'green'
 
-conexiones = [{'data': {'source': str(origen), 'target': str(destino)}, 'classes': get_class(linea)} for origen, destino, linea in cursor1.execute(GET_GRAPH_EDGES)]
+conexiones = [{'data': {'source': str(origen), 'target': str(destino), 'linea': linea}, 'classes': get_class(linea)} for origen, destino, linea in cursor1.execute(GET_GRAPH_EDGES)]
 
 station_listed = [{'label': f"{_id}-{station_name}", "value": _id} for _id, station_name, _, _, _ in cursor1.execute(GET_GRAPH_NODES)]
 
 
 # ------- App Layout (HTML DESCRIPTION) -------------
 
-app.layout = html.Div()
 app.layout = html.Div([
     html.Div([
         cyto.Cytoscape(
@@ -56,24 +54,33 @@ app.layout = html.Div([
             className="graph",
             stylesheet=[
                 {
-                    'selector': '[linea = 1]',
+                    'selector': 'node',
                     'style': {
-                        'background-color': 'red'
+                        'label': 'data(id)',
+                        'color': 'white'
                     }
                 },
-                
+                {
+                    'selector': '[linea = 1]',
+                    'style': {
+                        'background-color': 'red',
+                        'line-color': 'red'
+                    }
+                },
                 {
                     'selector': '[linea = 2]',
                     'style': {
                         'background-color': 'blue',
+                        'line-color': 'blue'
                     }
                 },
                 {
                     'selector': '[linea = 3]',
                     'style': {
-                        'background-color': 'green'
+                        'background-color': 'green',
+                        'line-color': 'green'
                     }
-                }
+                },
             ]
         )
     ], className="mainframe"),

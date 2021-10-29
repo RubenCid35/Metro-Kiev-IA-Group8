@@ -16,6 +16,16 @@ GET_CONEXION: str = """
     FROM conexiones 
     WHERE 
         conn_id = (SELECT conn1 FROM estaciones WHERE origen=?) 
-        OR conn_id = (SELECT conn1 FROM estaciones WHERE origen=?) 
+        OR conn_id = (SELECT conn2 FROM estaciones WHERE origen=?) 
         OR conn_id = (SELECT conn3 FROM estaciones WHERE origen=?)
+"""
+
+"""
+import sqlite3
+
+database_com = sqlite3.connect("./data/estaciones.db")
+cursor1 = database_com.cursor()
+
+for data in cursor1.execute("select * from conexiones"):
+    print(data)
 """
