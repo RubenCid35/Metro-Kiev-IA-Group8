@@ -70,7 +70,6 @@ app.layout = html.Div([
     html.Div([
         html.Div([
             html.H3("HALLA EL CAMINO"),
-
         ]),
         html.Div(id="path-container")
     ], className="mainframe")    
