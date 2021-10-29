@@ -6,7 +6,6 @@ GET_GRAPH_NODES: str = """
 
 """
 
-
 GET_GRAPH_EDGES: str = """
     SELECT origen, destino, linea FROM conexiones;
 """
@@ -16,7 +15,7 @@ GET_CONEXION: str = """
     SELECT destino, peso 
     FROM conexiones 
     WHERE 
-        conn_id = (SELECT conn1 FROM estaciones WHERE origen=111) 
-        OR conn_id = (SELECT conn1 FROM estaciones WHERE origen=111) 
-        OR conn_id = (SELECT conn3 FROM estaciones WHERE origen=111)
+        conn_id = (SELECT conn1 FROM estaciones WHERE origen=?) 
+        OR conn_id = (SELECT conn1 FROM estaciones WHERE origen=?) 
+        OR conn_id = (SELECT conn3 FROM estaciones WHERE origen=?)
 """
