@@ -1,6 +1,4 @@
 
-
-
 GET_GRAPH_NODES: str = """
     SELECT id_station, nombre, linea, posx, posy FROM estaciones
 
