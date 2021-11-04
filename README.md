@@ -6,6 +6,13 @@ Con esta app, será posible realizar la ruta más optima entre una estación a o
 
 ## Uso / Acceso a la aplicación.
 
+Para ejecutar el código de esta aplicación, se necesitaria descarga varias librearias de python.
+Pruebe a ejecutar para instalar de manera automática lo necesario:
+````
+pip install < requirements.txt
+````
+
+
 TODO: Completar.
 
 Nota: La idea sería deplegarlo usando Heroku para que sea accesible por todos los usuarios sin descarga alguna.
