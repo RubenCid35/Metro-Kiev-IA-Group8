@@ -1,19 +1,21 @@
-
-.mainframe{
-    width: 50%;
-    height: 50%;
-    display: flex;
-    position: relative;
+body {
+    background-color: #0057b8;
 }
 
-.graph{
-    width: 45%;
-    height: 45%;
-    padding: 2.5% 2.5% 2.5% 2.5%;
+.graph {
+    width: 1000px;
+    height: 1000px;
     background-color: black;
+    margin: 20px 20px 20px 20px;
 }
 
-.entrypoints, .submit_btn{
-    border-radius: 5px;
-    
+section {
+    padding-top: 40px;
+    margin-left: 30px;
+}
+
+.input_zone {
+    font-size: 20px;
+    text-align: left;
+    line-height: 100%;
 }
