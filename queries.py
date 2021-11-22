@@ -13,7 +13,5 @@ GET_CONEXION: str = """
     SELECT destino, peso 
     FROM conexiones 
     WHERE 
-        conn_id = (SELECT conn1 FROM estaciones WHERE origen=?) 
-        OR conn_id = (SELECT conn2 FROM estaciones WHERE origen=?) 
-        OR conn_id = (SELECT conn3 FROM estaciones WHERE origen=?)
+        origen=?    
 """

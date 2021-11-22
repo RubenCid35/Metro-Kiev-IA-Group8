@@ -23,17 +23,76 @@ app = dash.Dash("metro-kiev-grupo-1", assets_folder='assets')
 database_conn = sqlite3.connect("./data/estaciones.db")
 cursor1 = database_conn.cursor() 
 
-stations = [{'data': {'id': str(_id), 'name': station_name, 'linea': linea}, 'position': {'x': randint(1, 500), 'y': randint(1, 500)}, 'locked': False, 'grabbable': True}
+LOCATIONS = [
+(50,  150),  
+(50,  210), 
+(50,  260), 
+(50,  320), 
+(100, 320), 
+(150, 320), 
+(210, 320), 
+(260, 320), 
+(0, 150), 
+(0, 150),
+(0, 150),
+(0, 150),
+(0, 150),
+(0, 150),
+(0, 150),
+(0, 150),
+(0, 250), 
+(0, 250),
+(0, 250),
+(0, 250),
+(0, 250),
+(0, 250),
+(0, 250),
+(0, 250),
+(0, 350),
+(0, 350),
+(0, 350),
+(0, 350),
+(0, 350),
+(0, 350),
+(0, 350),
+(0, 350),
+(0, 450),
+(0, 450),
+(0, 450),
+(0, 450),
+(0, 450),
+(0, 450),
+(0, 450),
+(0, 450),
+(0, 550),
+(0, 550),
+(0, 550),
+(0, 550),
+(0, 550),
+(0, 550),
+(0, 550),
+(0, 550),
+(0, 650),
+(0, 650),
+(0, 650),
+(0, 650),
+(0, 650),
+(0, 650),
+]
+for (_id, station_name, linea, x, y), (x1, y1) in zip(cursor1.execute(GET_GRAPH_NODES), LOCATIONS):
+    print(_id, station_name, linea, x, y, x1, y1)
 
-for _id, station_name, linea, x, y in cursor1.execute(GET_GRAPH_NODES)]
-conexiones = [{'data': {'source': str(origen), 'target': str(destino), 'linea': linea}} for origen, destino, linea in cursor1.execute(GET_GRAPH_EDGES)]
+
+stations = [{'data': {'id': str(_id), 'name': station_name, 'linea': linea}, 'position': {'x': x1, 'y': y1}, 'locked': False, 'grabbable': True, "classes": None}
+for (_id, station_name, linea, x, y), (x1, y1) in zip(cursor1.execute(GET_GRAPH_NODES), LOCATIONS)]
+conexiones = [{'data': {'source': str(origen), 'target': str(destino), 'linea': linea}, "classes": None} for origen, destino, linea in cursor1.execute(GET_GRAPH_EDGES)]
 
 station_listed = [{'label': f"{_id}-{station_name}", "value": _id} for _id, station_name, _, _, _ in cursor1.execute(GET_GRAPH_NODES)]
 
 # ------- App Layout (HTML DESCRIPTION) -------------
 metro_graph = cyto.Cytoscape(
-            id="grefo-red-metro",
-            layout={'name': 'grid'}, # , 
+            id="grafo-red-metro",
+            layout={'name': 'preset'}, # , 
             style={'width': '45%', 'height': '700px','background-color': 'black', 'margin': '20px 20px 20px 20px', },
             elements=stations + conexiones,
             maxZoom=1,
@@ -69,28 +128,35 @@ metro_graph = cyto.Cytoscape(
                         'background-color': 'green',
                         'line-color': 'green'
                     }
+                },
+                {
+                    'selector': '.tomado',
+                    'style': {
+                        'background-color': 'yellow',
+                        'line-color': 'yellow'
+                    }
                 }
-            ]
+                ]
         )
 
 input_zone = html.Section([
-            html.H1("Encuentra tu camino", style={"color": "black", "padding-left": "30px"}),
-            html.Label("Selecciona la estación origen:", style={"color": "black", "padding-left": "30px", "font-size": "20px"}),
+            html.H1("Encuentra tu camino", style={"font-size": "40px"}),
+            html.Label("Selecciona la estación origen:", style={"color": "black", "padding-left": "30px", "font-size": "25px"}),
             dcc.Dropdown(   id="origen-input",
                             options=station_listed,
                             className="input_zone",
                             multi=False,
-                            style={"width": "75%", "padding-left": "30px", "padding-top": "10px"},
+                            style={"width": "60%", "padding-left": "30px", "padding-top": "10px"},
                             placeholder="Seleciona la Estación de Origen"),
             html.Div([], style={"width": "100%", 'height': "20px"}),
-            html.Label("Selecciona la estación destino:", style={"color": "black", "padding-left": "30px", "font-size": "20px", 'padding-top': "20px"}),
+            html.Label("Selecciona la estación destino:", style={"color": "black", "padding-left": "30px", "font-size": "25px", 'padding-top': "20px"}),
             dcc.Dropdown(   id="destino-input",
                             options=station_listed,
                             className="input_zone",
                             multi=False,
-                            style={"width": "75%", "padding-left": "30px", "padding-top": "10px"},
+                            style={"width": "60%", "padding-left": "30px", "padding-top": "10px"},
                             placeholder="Seleciona la Estación de destino"),
-            
+            html.Button("Get Path", id="btn-path")
         ])
 
 right_side = html.Div([
@@ -131,11 +197,14 @@ dbc.Row([
 
 # ------- App Callbacks (FOR MAKING THE APP INTERACTIVE) ------------
 
+@app.callback(Output('destino-input', 'value'),
+              Input('btn-path', 'n-clicks'),
+              State('grafo-red-metro', 'elements'))
+def get_positions(btn1, grafo) -> None:
+    with open('positions.json', 'w') as f: print(grafo, file=f)
 
 # ------- App -------------------------
 
 # Cuando acabemos debug debe de ser false
 if '__main__' == __name__:
     app.run_server(debug=True)
-    for data in stations:
-        print(data['data']['id'], '-'.data['position']['x'], '-', data['position']['y'])

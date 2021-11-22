@@ -10,12 +10,17 @@ body {
 }
 
 section {
-    padding-top: 40px;
+    padding-top: 30px;
     margin-left: 30px;
 }
 
 .input_zone {
     font-size: 20px;
     text-align: left;
-    line-height: 100%;
+    line-height: 75%;
+}
+
+#btn-path {
+    width: 20%;
+    height: 20%;
 }
