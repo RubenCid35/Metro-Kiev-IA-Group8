@@ -20,6 +20,6 @@ GET_CONEXION: str = """
     SELECT destino, peso, linea 
     FROM conexiones 
     WHERE 
-        origen=?
-        destino != ?    
+        origen == ? AND
+        destino != ?
 """
