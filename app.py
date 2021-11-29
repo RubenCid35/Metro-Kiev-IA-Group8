@@ -79,9 +79,6 @@ LOCATIONS = [ # TODO Luis pon esto son los nodos
 (0, 650),
 (0, 650),
 ]
-for (_id, station_name, linea, x, y), (x1, y1) in zip(cursor1.execute(GET_GRAPH_NODES), LOCATIONS):
-    print(_id, station_name, linea, x, y, x1, y1)
-
 
 stations = [{'data': {'id': str(_id), 'name': station_name, 'linea': linea}, 'position': {'x': x1, 'y': y1}, 'locked': False, 'grabbable': True, "classes": None}
 for (_id, station_name, linea, x, y), (x1, y1) in zip(cursor1.execute(GET_GRAPH_NODES), LOCATIONS)]
@@ -196,12 +193,6 @@ dbc.Row([
 
 
 # ------- App Callbacks (FOR MAKING THE APP INTERACTIVE) ------------
-
-@app.callback(Output('destino-input', 'value'),
-              Input('btn-path', 'n-clicks'),
-              State('grafo-red-metro', 'elements'))
-def get_positions(btn1, grafo) -> None:
-    with open('positions.json', 'w') as f: print(grafo, file=f)
 
 # ------- App -------------------------
 
