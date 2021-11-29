@@ -23,7 +23,7 @@ app = dash.Dash("metro-kiev-grupo-1", assets_folder='assets')
 database_conn = sqlite3.connect("./data/estaciones.db")
 cursor1 = database_conn.cursor() 
 
-LOCATIONS = [
+LOCATIONS = [ # TODO Luis pon esto son los nodos
 (50,  150),  
 (50,  210), 
 (50,  260), 
