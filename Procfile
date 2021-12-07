@@ -1,1 +1,1 @@
-web: gunicorn metro_app:server
+web: gunicorn metro_app
