@@ -24,3 +24,14 @@ section {
     width: 20%;
     height: 20%;
 }
+
+.path-detail-text{
+    padding-top: 30px;
+    padding-left: 30px;
+}
+.path-detail-text text{
+    font-size: 15px;
+}
+.path-detail-text summary{
+    font-size: 20px;
+}

@@ -17,8 +17,8 @@ Nota: La idea sería deplegarlo usando Heroku para que sea accesible por todos l
 
 
 ## Diseño de la APP
-TODO: Completar el diseño de la app
-
+La aplicación fue creada utilizando un dashborad. En ella se puede usar el grafo con las estaciones de metro para
+seleccionar las estaciones de salida y entrada. Despues  
 
 ## Colaboradores
 Los autores de esta aplicación son:

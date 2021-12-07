@@ -1,40 +1,74 @@
 from typing import List
 from queries import GET_CONEXION
+import numpy as np 
+import sqlite3
 
-# TODO: Importar las librerias necesarias para el trabajo.
+# Tabla con los valores 
+HEURISTICA = np.loadtxt("./data/pesos.csv", delimiter=";")
 
-# NOTA: Se pueden crear más funciones auxiliares privadas para reducir redundancia en el código.
+def estacion_a_index(estacion) -> int:
+    """
+    Convierte un número de estación a una matriz de heuristica. 
+    """
+    linea = estacion // 100 - 1
+    return linea * 18 + (estacion % 100) - 10
 
-def h_tiempo(hora: int) -> float:
-    pass
 
-def heuristica(node: int, destino: int) -> float:
-    pass
+def heuristica(origen: int, destino: int) -> float:
+    numeroNode = estacion_a_index(origen)
+    numeroDestino = estacion_a_index(destino)
+    return HEURISTICA[numeroNode, numeroDestino]
 
+def get_path_from_list(cerrada, cursor):
+    correct_list = [cerrada[-1][0]]
+    for (estacion, _, _) in reversed(cerrada[:-1]):
+        cursor.execute("SELECT destino from conexiones where origen==?", [correct_list[-1]])
+        conexions = list(map(lambda x: x[0], cursor.fetchall()))
+        if estacion in conexions:
+            correct_list.append(estacion)
 
-def get_path_from_list(cerrada: List[(int, float)]):
-    return [data for (data,_) in cerrada]
+    return list(reversed(correct_list)), cerrada[-1][2]
 
-def busqueda_camino(cursor, inicio, destino, hora) -> List[str]:
-    # TODO Implementar el algoritmo de A* para que devuelva el camino más corto
-    # NOTA: lo de **kwargs es para añadir más parámetro por si queremos ajustarlo a 
-    # la hora del día u otra cosa.
+def busqueda_camino(cursor, inicio, destino) -> List[str]:
     
     abierta = []
     cerrada = []
     
-    abierta.append((inicio, 0 + heuristica(inicio)))
+    # Nodo: Número de estacion, g(estacion), g(estacion) + h(estacion)
+    abierta.append((inicio, 0, 0 + heuristica(inicio, destino)))
 
-    last_added = inicio
-    while cerrada != [] and  cerrada[-1][0] != destino:
+    while abierta != [] and  (cerrada == [] or cerrada[-1][0] != destino):
+        # Ordenado de los valores de acuerdo a su peso más la heuristica
+        abierta.sort(key = lambda x: x[2]) 
+
+        # Evaluación del primer nodo
+        cerrada.append(abierta.pop(0))
+
         # Añadir los nodos hijos
-        
-        for destino, peso in cursor.execute(GET_CONEXION, (inicio)):
-            pass
+        for (dest,) in cursor.execute("SELECT destino from conexiones where origen==?", [cerrada[-1][0]]):
             
+            # Precalculo de los valores
+            gpeso = cerrada[-1][1] + heuristica(dest, cerrada[-1][0]) 
+            total = gpeso + heuristica(dest, destino)
+            
+            # Busqueda dentro de la lista cerrada
+            if any(map(lambda node: dest == node[0], cerrada)):
+                continue
+            # Busqueda dentro de la lista abierta
+            elif idx := [i for i, estacion in enumerate(abierta) if estacion[0] == dest]:
+                if abierta[idx[0]][2] < total:
+                    abierta[idx[0]] = (dest, gpeso, total)
+            
+            # Añadido a la lista abierta
+            else:
+                abierta.append((dest, gpeso, total))
+                                           
+    return get_path_from_list(cerrada, cursor)
 
-    return get_path_from_list(cerrada)
 
 
-def dijkstra_search(cursor, origen, destino) -> float:
-    return 0
+if __name__ == '__main__':
+    # Para tests
+    conn = sqlite3.connect("./data/estaciones.db")
+    cursor = conn.cursor()
+    print(busqueda_camino(cursor, 113, 218))
