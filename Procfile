@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath metro_app.py:server
+web: python metro_app.py 
