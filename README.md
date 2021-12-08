@@ -11,18 +11,21 @@ Pruebe a ejecutar para instalar de manera automática lo necesario:
 ````
 pip install -r requirements.txt
 ````
-TODO: Completar.
-
-Nota: La idea sería deplegarlo usando Heroku para que sea accesible por todos los usuarios sin descarga alguna.
+Se puede acceder a la aplicación, si descargar el repositorio o ejecutarlo en el siguiente enlace.
+La aplicación está desplegada en la plataforma de [Heroku](www.heroku.com).
+Enlace de Uso: https://metro-kiev-grupo1.herokuapp.com/
 
 
 ## Diseño de la APP
 La aplicación fue creada utilizando un dashborad. En ella se puede usar el grafo con las estaciones de metro para
-seleccionar las estaciones de salida y entrada. Despues  
+seleccionar las estaciones de salida y entrada.
+
+<img src="./assets/app_image.png" width="1000" heightk="248" />
+
 
 ## Colaboradores
 Los autores de esta aplicación son:
 - Rubén Cid.
-- Pedro Ortiz.
 - Rodrigo Duran.
 - Luis Nuñez.
+- Pedro Ortiz.
