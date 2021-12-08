@@ -1,1 +1,1 @@
-web: python metro_app.py 
+web: python metro_app:app
