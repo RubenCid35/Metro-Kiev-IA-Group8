@@ -26,6 +26,6 @@ seleccionar las estaciones de salida y entrada.
 ## Colaboradores
 Los autores de esta aplicación son:
 - Rubén Cid.
-- Rodrigo Duran.
+- Rodrigo Duran Andres.
 - Luis Nuñez.
 - Pedro Ortiz.
