@@ -24,7 +24,7 @@ def heuristica(origen: int, destino: int) -> float:
 
 def get_path_from_list(cerrada, cursor):
     """
-    Elimina estaciones que no se han
+    Elimina estaciones que no son necesarias para el camino entre las dos estaciones.
     """
     correct_list = [cerrada[-1][0]]
     for (estacion, _, _) in reversed(cerrada[:-1]):
