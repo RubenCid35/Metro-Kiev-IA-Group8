@@ -100,7 +100,7 @@ input_zone = html.Section([
                             multi=False,
                             style={"width": "60%", "padding-left": "30px", "padding-top": "10px"},
                             placeholder="Seleciona la Estación de destino"),
-            html.Button("Get Path", id="btn-path", style={"margin-top": "20px", "width": "40%", "height": "40px", "margin-left": "30px"})
+            html.Button("Calcular Camino", id="btn-path", style={"margin-top": "20px", "width": "40%", "height": "40px", "margin-left": "30px", "font-size":"20px"})
         ])
 # 
 right_side = html.Div([
@@ -109,7 +109,7 @@ right_side = html.Div([
         ], style={'width': "50%", 'heigth': '50%'})
 
 app.layout = html.Div([
-    html.Div([html.H1("LINEA DE METRO DE KIEV: BUSCA TU CAMINO")], style={'text-align':"center", 'margin': '20px 20px 20px 20px'}),
+    html.Div([html.H1("LINEA DE METRO DE KIEV: BUSCA TU CAMINO", style={"color": "white"})], style={'text-align':"center", 'margin': '20px 20px 20px 20px'}),
     html.Div([metro_graph, right_side], style={'display': 'flex'}),
     html.Div(id="hidden-div", style={"display":"none"})
 ])
@@ -194,10 +194,7 @@ def cambiar_nodo_input(selected, _, dest, nodos, origen):
         
         return nodos, dest, "", origen
     else:
-        if origen is None:
-            return nodos, dest, "", origen
-            
-        if dest is None:
+        if origen is None or dest is None:
             return nodos, dest, "", origen
 
         path = bq.busqueda_camino(cursor, origen, dest)

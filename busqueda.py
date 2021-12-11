@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 from queries import GET_CONEXION
 import numpy as np 
 import sqlite3
@@ -15,11 +15,17 @@ def estacion_a_index(estacion) -> int:
 
 
 def heuristica(origen: int, destino: int) -> float:
+    """
+    Extrae el calculo de la h(n) entre dos estaciones. Se saca de una tabla guardada en pesos.csv 
+    """
     numeroNode = estacion_a_index(origen)
     numeroDestino = estacion_a_index(destino)
     return HEURISTICA[numeroNode, numeroDestino]
 
 def get_path_from_list(cerrada, cursor):
+    """
+    Elimina estaciones que no se han
+    """
     correct_list = [cerrada[-1][0]]
     for (estacion, _, _) in reversed(cerrada[:-1]):
         cursor.execute("SELECT destino from conexiones where origen==?", [correct_list[-1]])
@@ -27,10 +33,13 @@ def get_path_from_list(cerrada, cursor):
         if estacion in conexions:
             correct_list.append(estacion)
 
-    return list(reversed(correct_list)), cerrada[-1][2]
+    return reversed(correct_list), cerrada[-1][2]
 
-def busqueda_camino(cursor, inicio, destino) -> List[str]:
-    
+def busqueda_camino(cursor, inicio, destino) -> Tuple[(List[str], float)]:
+    """
+    Calcula la ruta más optima entre dos estaciones de metro (origen y destino) usando una impletación
+    del algoritmo A*
+    """
     abierta = []
     cerrada = []
     
@@ -45,10 +54,10 @@ def busqueda_camino(cursor, inicio, destino) -> List[str]:
         cerrada.append(abierta.pop(0))
 
         # Añadir los nodos hijos
-        for (dest,) in cursor.execute("SELECT destino from conexiones where origen==?", [cerrada[-1][0]]):
+        for (dest, g_n) in cursor.execute("SELECT destino, peso from conexiones where origen==?", [cerrada[-1][0]]):
             
             # Precalculo de los valores
-            gpeso = cerrada[-1][1] + heuristica(dest, cerrada[-1][0]) 
+            gpeso = cerrada[-1][1] + g_n # heuristica(dest, cerrada[-1][0]) 
             total = gpeso + heuristica(dest, destino)
             
             # Busqueda dentro de la lista cerrada
