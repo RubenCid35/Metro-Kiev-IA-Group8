@@ -16,6 +16,12 @@ La aplicación está desplegada en la plataforma de [Heroku](www.heroku.com).
 Enlace de Uso: https://metro-kiev-grupo1.herokuapp.com/
 
 
+## Documentación
+Para facilitar la compresión y entendimiento de las partes de esta aplicación, se ha facilitado una documentación de Github
+en la que se exponen las partes de este proyecto. Se puede acceder a la documentación a través del siguiente link:
+
+https://documentacionai.gitbook.io/optimizador-de-rutas-para-transporte-grupo-8/
+
 ## Diseño de la APP
 La aplicación fue creada utilizando un dashborad. En ella se puede usar el grafo con las estaciones de metro para
 seleccionar las estaciones de salida y entrada.
