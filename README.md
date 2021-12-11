@@ -13,7 +13,7 @@ pip install -r requirements.txt
 ````
 Se puede acceder a la aplicación, si descargar el repositorio o ejecutarlo en el siguiente enlace.
 La aplicación está desplegada en la plataforma de [Heroku](www.heroku.com).
-Enlace de Uso: https://github.com/RubenCid35/Metro-Kiev-IA-Group8.git
+Enlace de Uso: https://metro-kiev-grupo8.herokuapp.com/
 
 
 ## Documentación
