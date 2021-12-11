@@ -1,4 +1,4 @@
-# Metro-Kiev-IA-Group1
+# Metro-Kiev-IA-Group8
 Se desea moverse por la red de metro de Kiev, pero no conoces las paradas que debes tomar y cuando debes o no cambiar de linea. 
 
 Con esta app, será posible realizar la ruta más optima entre una estación a otra con un viaje de mínima duración.
@@ -11,10 +11,9 @@ Pruebe a ejecutar para instalar de manera automática lo necesario:
 ````
 pip install -r requirements.txt
 ````
-<<<<<<< HEAD
 Se puede acceder a la aplicación, si descargar el repositorio o ejecutarlo en el siguiente enlace.
 La aplicación está desplegada en la plataforma de [Heroku](www.heroku.com).
-Enlace de Uso: https://metro-kiev-grupo1.herokuapp.com/
+Enlace de Uso: https://github.com/RubenCid35/Metro-Kiev-IA-Group8.git
 
 
 ## Documentación
